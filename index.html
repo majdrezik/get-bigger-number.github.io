@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            text-align: center;
+            border: 2px solid green;
+            width: 80%;
+            height: 50vh;
+            margin-left: 10vw;
+            margin-right: 10vw;
+            padding: 30px;
+            font-size:xx-large;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        var curr = 0
+        var lost = false
+        var replay = false
+        var greatesTotal =  (greatesTotal == undefined ? 0 : greatesTotal)
+        $(document).ready(function(){
+                $("#play").click(function(){
+                    if(lost == true || $("#play").html == "Replay"){
+                        $("#res").html("")
+                        $("#test").html("Current Total : 0 - Get a bigger number!")
+                        $("#quit").show()
+                        $("#play").html("Play").css('font-size' , 'xx-large')
+                        curr = 0;
+                        item = 0;
+                        lost = false
+                    }
+
+                    
+                    else { 
+                        let item = Math.floor(Math.random() * 500)
+                        //Lose
+                        if(item < curr){
+                            $("#test").html("Current Total : " + item + " - You Lose!").css('color', 'red');
+                            $("#res").html("Total before loosing: " + curr );
+                            curr = 0
+                            item = 0
+                            lost = true
+                            $("#play").html("Replay").css('font-size' , 'xx-large')
+                            $("#quit").hide()
+                            $("#greatesTotal").html("Greatest Total is : " + greatesTotal)
+                        }
+                        // Continue
+                        else{
+                            curr = item
+                            greatesTotal = ( curr > greatesTotal ? curr : greatesTotal )
+                            $("#test").html("Current Total : " + curr + "").css('color', 'green');
+                            $("#play").html("Continue Playing").css('font-size' , 'xx-large')
+                            $("#greatesTotal").html("Greatest Total is : " + greatesTotal)
+                        }
+                    }
+                });
+
+
+            $("#quit").click(function(){
+                $("#res").html("Total : " + curr );
+                $("#test").html("Current Total : 0 - Get a bigger number!")
+                $("#play").html("Play").css('font-size' , 'xx-large')
+                $("#greatesTotal").html("Greatest Total is : " + greatesTotal)
+            });
+
+            
+
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container" >
+        <h3 style="text-align: center;">Welcome to my game!</h3>
+        <p id="test" style="text-align: center;">Current Total : 0 - Get a bigger number!</p>
+        <div>
+            <button id="play" style="  margin-left: auto; margin-right: auto; width: 15vw; font-size: xx-large; border: 2px solid green; color: green;">Play 
+            </button>
+            <button id="quit" style="  margin-left: auto; margin-right: auto; width: 15vw; font-size: xx-large; border: 2px solid red; color: red;">Quit 
+            </button>
+        </div>
+        <h4 id="res" style="text-align: center;"></h4>
+        <h5 id="greatesTotal" style="text-align: center;"></h5>
+
+    </div>
+</body>
+</html>
